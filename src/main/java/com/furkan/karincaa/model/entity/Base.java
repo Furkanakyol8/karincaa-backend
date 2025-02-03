@@ -27,7 +27,7 @@ public abstract class Base {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @Column
+    @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
     @PrePersist

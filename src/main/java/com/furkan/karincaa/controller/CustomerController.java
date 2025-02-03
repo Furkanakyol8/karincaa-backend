@@ -1,12 +1,13 @@
 package com.furkan.karincaa.controller;
 
 import com.furkan.karincaa.model.dto.*;
-import com.furkan.karincaa.service.AuthService;
 import com.furkan.karincaa.service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,5 +24,16 @@ public class CustomerController{
     @GetMapping("/me")
     public ResponseEntity<CustomerDto> me() {
         return ResponseEntity.ok(customerService.me());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomerDto> update(@PathVariable UUID id, @RequestBody @Valid CustomerUpdateRequest customerUpdateRequest) {
+        return ResponseEntity.ok(customerService.update(id, customerUpdateRequest));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete (@PathVariable @Valid UUID id) {
+        customerService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
