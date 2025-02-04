@@ -22,7 +22,7 @@ public class ProviderPost extends JobPost {
     @Max(value = 5, message = "rating point shouldn't be more than 5")
     private double avreageRating;
 
-//    @OneToMany(mappedBy = "job_post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-//    private List<Comment> comment;
+    @OneToMany(mappedBy = "providerPost", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Comment> comment;
 
 }
