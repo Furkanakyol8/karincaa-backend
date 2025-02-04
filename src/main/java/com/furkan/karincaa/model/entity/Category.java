@@ -23,7 +23,7 @@ public class Category extends Base {
 
     @ManyToOne
     @JoinColumn(name = "parent_category_id")
-    private Category parentCategory; // If null this category is parent.
+    private Category parentCategory; // If null category is parent.
 
     @Column(name = "photo")
     private String photo;
@@ -42,5 +42,10 @@ public class Category extends Base {
 
         subCategory.setParentCategory(this);
         subCategories.add(subCategory);
+    }
+
+    public void removeSubCategory(Category subCategory) {
+        subCategories.remove(subCategory);
+        subCategory.setParentCategory(null);
     }
 }

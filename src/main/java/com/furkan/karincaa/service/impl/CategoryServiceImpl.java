@@ -32,7 +32,6 @@ public class CategoryServiceImpl implements CategoryService {
 
         Category category = new Category(createCategoryRequest.name());
 
-
         return new RootCategoryDto(categoryRepository.save(category));
     }
 
@@ -53,13 +52,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     private Category findRootCategoryById(UUID id) {
         return categoryRepository.findRootCategoryById(id)
-                .orElseThrow(() -> new NotFoundException("Parent category not found"));
+                .orElseThrow(() -> new NotFoundException("Parent category not found with id: " + id));
     }
 
     @Override
-    public CategoryDto findById(UUID id){
+    public CategoryDto findById(UUID id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Category not found"));
+                .orElseThrow(() -> new NotFoundException("Category not found with id: " + id));
 
         return category.getParentCategory() == null
                 ? new RootCategoryDto(category)
@@ -72,5 +71,17 @@ public class CategoryServiceImpl implements CategoryService {
                 .stream()
                 .map(CategoryDto::new)
                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public void delete(UUID id) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Category not found with id: " + id));
+
+        if (category.getParentCategory() != null) { // If category is subscribed
+            category.getParentCategory().removeSubCategory(category);
+        }
+
+        categoryRepository.delete(category);
     }
 }

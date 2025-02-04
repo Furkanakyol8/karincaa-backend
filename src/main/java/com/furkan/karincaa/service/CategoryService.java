@@ -16,4 +16,6 @@ public interface CategoryService {
     CategoryDto findById(UUID id);
 
     Set<CategoryDto> getAllRootCategories();
+
+    void delete(UUID id);
 }
