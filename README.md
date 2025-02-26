@@ -1,2 +1,2 @@
 # karincaa-backend
-Karincaa application backend
+## FREELANCE APPLICATION INTERRUPTED BY EMPLOYER
